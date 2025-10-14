@@ -1,73 +1,58 @@
-# React + TypeScript + Vite
+# WallStreet Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+WallStreet is a Vite + React + TypeScript interface for exploring public companies and their market data. It provides reusable UI components for company snapshots and typed helpers for calling the [Financial Modeling Prep](https://financialmodelingprep.com/developer/docs/) API.
 
-Currently, two official plugins are available:
+## Features
+- Search bar component ready to power symbol lookup flows.
+- Company card components for highlighting key details.
+- Strongly typed API client (`src/api.tsx`) built with Axios.
+- Configuration-driven API base URL and key management (`src/config.ts`).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
+- React 19 with TypeScript for typed UI development.
+- Vite 7 for rapid builds and HMR.
+- Axios for REST requests.
+- ESLint with the flat config for linting.
 
-## React Compiler
+## Getting Started
+1. Install dependencies:
+   ```bash
+   npm install
+   ```
+2. Add a `.env` file with your Financial Modeling Prep key:
+   ```bash
+   VITE_REACT_APP_API_KEY=your_api_key
+   ```
+3. Launch the dev server:
+   ```bash
+   npm run dev
+   ```
+4. Open the URL shown in the terminal (defaults to http://localhost:5173).
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Available Scripts
+- `npm run dev` – start the Vite dev server with HMR.
+- `npm run build` – run the TypeScript project references build and bundle for production.
+- `npm run preview` – serve the production build locally.
+- `npm run lint` – lint the codebase with ESLint.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Project Structure
+```
+frontend/
+├── public/             # Static assets served as-is
+├── src/
+│   ├── Components/     # Reusable UI components (cards, search, etc.)
+│   ├── api.tsx         # Financial Modeling Prep API helper
+│   ├── config.ts       # API base URL and key wiring
+│   ├── company.d.ts    # Shared TypeScript types for company data
+│   └── main.tsx        # React entry point
+└── vite.config.ts      # Vite configuration
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Next Steps
+- Wire the search form to `searchCompanies` to display live results.
+- Expand card data with metrics from `company.d.ts`.
+- Add automated tests for API helpers and components.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## License
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+This project is licensed under the terms of the MIT License. See the root `LICENSE` file for details.
