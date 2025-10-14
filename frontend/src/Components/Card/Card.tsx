@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { type JSX } from 'react'
 import './Card.css'
 
-type Props = {}
+type Props = {
+    companyName: string
+    ticker: string
+    price?: number
+}
 
-const Card = (props: Props) => {
+const Card: React.FC<Props> = ({
+    companyName, 
+    ticker, 
+    price
+}: Props): JSX.Element => {
     return (
         <div className='card'>
             <img
@@ -11,8 +19,8 @@ const Card = (props: Props) => {
                 alt="Image"
             />
             <div className='details'>
-                <h2>APPL</h2>
-                <p>$110</p>
+                <h2>{companyName} ({ticker})</h2>
+                <p>${price}</p>
             </div>
             <p className='info'>Apple Inc. is an American multinational technology company that specializes in designing, manufacturing, and marketing consumer electronics, software, and online services. Founded in 1976 by Steve Jobs, Steve Wozniak, and Ronald Wayne, Apple has become one of the world's most valuable and influential companies.</p>
         </div>
