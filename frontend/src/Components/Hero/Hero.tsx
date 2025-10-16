@@ -1,5 +1,6 @@
 import React from "react";
 import hero from "../../Assets/Hero.avif";
+import { Link } from "react-router-dom";
 
 interface Props {}
 
@@ -12,15 +13,16 @@ const Hero = (props: Props) => {
             Financial data with no news.
           </h1>
           <p className="text-2xl text-center text-gray-400 lg:max-w-md lg:text-left">
-            Search relevant financial documents without fear mongering and fake news.
+            Search relevant financial documents without fear mongering and fake
+            news.
           </p>
           <div className="mx-auto lg:mx-0">
-            <a
-              href="#"
+            <Link
+              to="/search"
               className="px-10 py-5 text-2xl font-bold text-white bg-light-green rounded hover:opacity-70 lg:py-4"
             >
               Get Started
-            </a>
+            </Link>
           </div>
         </div>
         <div className="mb-24 mx-auto md:w-180 md:px-10 lg:mb-0 lg:w-1/2">
