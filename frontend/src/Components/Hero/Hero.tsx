@@ -2,7 +2,7 @@ import React from "react";
 import hero from "../../Assets/Hero.avif";
 import { Link } from "react-router-dom";
 
-interface Props {}
+interface Props { }
 
 const Hero = (props: Props) => {
   return (

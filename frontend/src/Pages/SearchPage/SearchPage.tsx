@@ -6,7 +6,7 @@ import Search from "../../Components/Search/Search";
 import ListPortfolio from "../../Components/Portfolio/ListPorfolio/ListPortfolio";
 import CardList from "../../Components/CardList/CardList";
 
-interface Props {}
+interface Props { }
 
 const SearchPage = (props: Props) => {
   const [search, setSearch] = useState<string>("");

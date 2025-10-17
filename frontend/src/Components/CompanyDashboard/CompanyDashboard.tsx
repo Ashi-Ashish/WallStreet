@@ -1,0 +1,23 @@
+import React, { type ReactNode } from 'react'
+import { Outlet } from 'react-router-dom'
+
+interface Props {
+    children: ReactNode
+}
+
+const CompanyDashboard = ({ children }: Props) => {
+    return (
+        <div className="relative md:ml-64 bg-slate-100 w-full">
+            <div className="relative pt-20 pb-32 bg-light-blue">
+                <div className="px-4 md:px-6 mx-auto w-full">
+                    <div>
+                        <div className="flex flex-wrap">{children}</div>
+                        <div className="flex flex-wrap">{<Outlet />}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+export default CompanyDashboard
