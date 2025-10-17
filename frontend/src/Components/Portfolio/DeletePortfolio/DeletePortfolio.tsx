@@ -1,4 +1,4 @@
-import React, { type SyntheticEvent } from "react";
+import { type SyntheticEvent } from "react";
 
 interface Props {
   onPortfolioDelete: (e: SyntheticEvent) => void;

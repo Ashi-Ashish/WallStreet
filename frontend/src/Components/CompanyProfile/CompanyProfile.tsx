@@ -1,6 +1,4 @@
-import React from 'react'
-
-interface Props {}
+interface Props { }
 
 const CompanyProfile = (props: Props) => {
   return (

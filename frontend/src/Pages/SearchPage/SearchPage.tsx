@@ -1,4 +1,4 @@
-import React, { useState, type ChangeEvent, type SyntheticEvent } from "react";
+import { useState, type ChangeEvent, type SyntheticEvent } from "react";
 import type { CompanySearch } from "../../company";
 import { searchCompanies } from "../../api";
 import Navbar from "../../Components/Navbar/Navbar";

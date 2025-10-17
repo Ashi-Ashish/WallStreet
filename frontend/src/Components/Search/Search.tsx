@@ -1,6 +1,6 @@
-import React, {
-  useState,
+import {
   type ChangeEvent,
+  type FC,
   type JSX,
   type SyntheticEvent,
 } from "react";
@@ -11,7 +11,7 @@ interface Props {
   handleSearchChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Search: React.FC<Props> = ({
+const Search: FC<Props> = ({
   onSearchSubmit,
   search,
   handleSearchChange,

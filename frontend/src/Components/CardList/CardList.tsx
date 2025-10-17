@@ -1,4 +1,4 @@
-import React, { type JSX, type SyntheticEvent } from "react";
+import { type FC, type JSX, type SyntheticEvent } from "react";
 import Card from "../Card/Card";
 import type { CompanySearch } from "../../company";
 import { v4 } from "uuid";
@@ -8,7 +8,7 @@ interface Props {
   onPortfolioCreate: (e: SyntheticEvent) => void;
 };
 
-const CardList: React.FC<Props> = ({
+const CardList: FC<Props> = ({
   searchResult,
   onPortfolioCreate,
 }: Props): JSX.Element => {
