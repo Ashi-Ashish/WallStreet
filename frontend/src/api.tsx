@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { CompanyProfile, CompanySearch } from "./company";
+import type { CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company";
 import config from "./config";
 
 interface SearchResponse {
@@ -20,7 +20,7 @@ export const searchCompanies = async (query: string) => {
             return 'An unexpected error occurred';
         }
     }
-}
+};
 
 export const getCompanyProfile = async (symbol: string) => {
     try {
@@ -29,4 +29,13 @@ export const getCompanyProfile = async (symbol: string) => {
     } catch (error: any) {
         console.log("error message from API:", error.message);
     }
-}
+};
+
+export const getKeyMetrics = async (symbol: string) => {
+    try {
+        const data = await axios.get<CompanyKeyMetrics[]>(`${config.apiBaseUrl}/key-metrics-ttm?symbol=${symbol}&apikey=${config.apiKey}`)
+        return data;
+    } catch (error: any) {
+        console.log("error message from API:", error.message);
+    }
+};
