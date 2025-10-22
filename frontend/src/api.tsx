@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { CompanyBalanceSheet, CompanyCashFlow, CompanyIncomeStatement, CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company";
+import type { CompanyBalanceSheet, CompanyCashFlow, CompanyCompData, CompanyIncomeStatement, CompanyKeyMetrics, CompanyProfile, CompanySearch, CompanyTenK } from "./company";
 import config from "./config";
 
 interface SearchResponse {
@@ -61,6 +61,24 @@ export const getBalanceSheet = async (symbol: string) => {
 export const getCashFlowStatement = async (symbol: string) => {
     try {
         const data = await axios.get<CompanyCashFlow[]>(`${config.apiBaseUrl}/cash-flow-statement?symbol=${symbol}&limit=5&apikey=${config.apiKey}`)
+        return data;
+    } catch (error: any) {
+        console.log("error message from API:", error.message);
+    }
+};
+
+export const getCompData = async (symbol: string) => {
+    try {
+        const data = await axios.get<CompanyCompData[]>(`${config.apiBaseUrl}/stock-peers?symbol=${symbol}&limit=5&apikey=${config.apiKey}`)
+        return data;
+    } catch (error: any) {
+        console.log("error message from API:", error.message);
+    }
+};
+
+export const getTenK = async (symbol: string) => {
+    try {
+        const data = await axios.get<CompanyTenK[]>(`${config.apiBaseUrl}/sec-filings-search/symbol?symbol=${symbol}&formType=10-K&from=2025-01-01&to=2025-09-01&page=0&limit=5&apikey=${config.apiKey}`)
         return data;
     } catch (error: any) {
         console.log("error message from API:", error.message);

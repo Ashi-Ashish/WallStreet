@@ -309,3 +309,18 @@ export interface CompanyKeyMetrics {
   dividendPerShareTTM: number;
   debtToMarketCapTTM: number;
 }
+
+export interface CompanyCompData {
+  symbol: string;
+  companyName: string;
+}
+
+export interface CompanyTenK {
+  symbol: string;
+  cik: string;
+  formType: string;
+  filingDate: string;
+  acceptedDate: string;
+  link: string;
+  finalLink: string;
+}
