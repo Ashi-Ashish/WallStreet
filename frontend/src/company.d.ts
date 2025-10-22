@@ -42,6 +42,7 @@ export interface CompanyProfile {
   isActivelyTrading: boolean;
   isAdr: boolean;
   isFund: boolean;
+  averageVolume: number;
 }
 
 export interface CompanyKeyRatios {

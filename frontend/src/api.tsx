@@ -1,5 +1,5 @@
 import axios from "axios"
-import type { CompanyBalanceSheet, CompanyIncomeStatement, CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company";
+import type { CompanyBalanceSheet, CompanyCashFlow, CompanyIncomeStatement, CompanyKeyMetrics, CompanyProfile, CompanySearch } from "./company";
 import config from "./config";
 
 interface SearchResponse {
@@ -52,6 +52,15 @@ export const getIncomeStatement = async (symbol: string) => {
 export const getBalanceSheet = async (symbol: string) => {
     try {
         const data = await axios.get<CompanyBalanceSheet[]>(`${config.apiBaseUrl}/balance-sheet-statement?symbol=${symbol}&limit=5&apikey=${config.apiKey}`)
+        return data;
+    } catch (error: any) {
+        console.log("error message from API:", error.message);
+    }
+};
+
+export const getCashFlowStatement = async (symbol: string) => {
+    try {
+        const data = await axios.get<CompanyCashFlow[]>(`${config.apiBaseUrl}/cash-flow-statement?symbol=${symbol}&limit=5&apikey=${config.apiKey}`)
         return data;
     } catch (error: any) {
         console.log("error message from API:", error.message);
