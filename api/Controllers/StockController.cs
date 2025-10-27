@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
+using api.DTOs.Stock;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
@@ -12,15 +14,22 @@ namespace api.Controllers
     public class StockController : ControllerBase
     {
         ApplicationDBContext _context;
-        public StockController(ApplicationDBContext context)
+        IMapper _mapper;
+
+        public StockController(
+            ApplicationDBContext context,
+            IMapper mapper
+        )
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpGet]
         public IActionResult GetAll()
         {
-            var stocks = _context.Stocks.ToList();
+            var stocks = _context.Stocks.ToList()
+                .Select(s => _mapper.Map<StockDTO>(s));
 
             return Ok(stocks);
         }
@@ -34,7 +43,7 @@ namespace api.Controllers
             {
                 return NotFound();
             }
-            return Ok(stock);
+            return Ok(_mapper.Map<StockDTO>(stock));
         }
     }
 }

@@ -1,4 +1,6 @@
 using api.Data;
+using api.Mappers;
+using api.Models;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(cfg => { }, typeof(StockProfile).Assembly);
 
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
 {
