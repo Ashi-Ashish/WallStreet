@@ -9,6 +9,8 @@ namespace api.Mappers
         public StockProfile()
         {
             CreateMap<Stock, StockDTO>();
+            CreateMap<CreateStockRequestDTO, Stock>();
+            CreateMap<UpdateStockRequestDTO, Stock>();
         }
     }
 }
