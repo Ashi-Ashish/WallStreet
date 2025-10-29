@@ -1,9 +1,10 @@
 using api.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Data
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<AppUser>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> dbContextOptions)
             : base(dbContextOptions)
@@ -69,6 +70,50 @@ namespace api.Data
                     MarketCap = 550000000000
                 }
             );
+
+            modelBuilder.Entity<Comment>().HasData(
+                new Comment
+                {
+                    Id = 1,
+                    Title = "Strong Q2 Results",
+                    Content = "Apple posted another record quarter. Holding long-term.",
+                    CreatedOn = new DateTime(2024, 7, 31),
+                    StockId = 1
+                },
+                new Comment
+                {
+                    Id = 2,
+                    Title = "Cloud Keeps Growing",
+                    Content = "Azure growth surprised to the upside; adding to my MSFT position.",
+                    CreatedOn = new DateTime(2024, 8, 15),
+                    StockId = 2
+                },
+                new Comment
+                {
+                    Id = 3,
+                    Title = "Competition Heating Up",
+                    Content = "Amazon retail margins are tight, but AWS remains a cash cow.",
+                    CreatedOn = new DateTime(2024, 8, 20),
+                    StockId = 3
+                },
+                new Comment
+                {
+                    Id = 4,
+                    Title = "Valuation Check",
+                    Content = "Tesla still feels pricey—waiting for a pullback before buying more.",
+                    CreatedOn = new DateTime(2024, 9, 5),
+                    StockId = 4
+                },
+                new Comment
+                {
+                    Id = 5,
+                    Title = "AI Tailwinds",
+                    Content = "NVIDIA guidance keeps climbing; bullish on continued GPU demand.",
+                    CreatedOn = new DateTime(2024, 9, 12),
+                    StockId = 5
+                }
+            );
+
         }
     }
 }

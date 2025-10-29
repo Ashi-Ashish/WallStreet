@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.Data;
 using api.DTOs.Stock;
+using api.Helper;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
@@ -32,9 +33,13 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] QueryObject query)
         {
-            var stocks = await _stockRepo.GetAllAsync();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var stocks = await _stockRepo.GetAllAsync(query);
             var stockDtos = stocks.Select(s => _mapper.Map<StockDTO>(s));
             return Ok(stockDtos);
         }
@@ -49,14 +54,6 @@ namespace api.Controllers
                 return NotFound();
             }
             return Ok(_mapper.Map<StockDTO>(stock));
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO stockDto)
-        {
-            var stock = _mapper.Map<Stock>(stockDto);
-            await _stockRepo.CreateAsync(stock);
-            return CreatedAtAction(nameof(GetById), new { id = stock.Id }, _mapper.Map<StockDTO>(stock));
         }
 
         [HttpPut]
@@ -83,6 +80,14 @@ namespace api.Controllers
             }
 
             return NoContent();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateStockRequestDTO stockDto)
+        {
+            var stock = _mapper.Map<Stock>(stockDto);
+            await _stockRepo.CreateAsync(stock);
+            return CreatedAtAction(nameof(GetById), new { id = stock.Id }, _mapper.Map<StockDTO>(stock));
         }
     }
 }

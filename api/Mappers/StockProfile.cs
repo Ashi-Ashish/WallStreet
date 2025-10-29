@@ -8,7 +8,8 @@ namespace api.Mappers
     {
         public StockProfile()
         {
-            CreateMap<Stock, StockDTO>();
+            CreateMap<Stock, StockDTO>()
+                .ForMember(dest => dest.Comments, opt => opt.MapFrom(src => src.Comments));
             CreateMap<CreateStockRequestDTO, Stock>();
             CreateMap<UpdateStockRequestDTO, Stock>();
         }
