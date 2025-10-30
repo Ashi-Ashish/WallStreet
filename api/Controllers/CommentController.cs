@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using api.DTOs.Comment;
 using api.Extensions;
+using api.Helper;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
@@ -39,15 +40,16 @@ namespace api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] CommentQueryObject queryObject)
         {
-            var comment = await _commentRepository.GetAllAsync();
+            var comment = await _commentRepository.GetAllAsync(queryObject);
             var commentDTO = comment.Select(c => _mapper.Map<CommentDTO>(c));
             return Ok(commentDTO);
         }
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetById([FromRoute] int id)
         {
             var comment = await _commentRepository.GetByIdAsync(id);
