@@ -12,7 +12,11 @@ namespace api.Mappers
     {
         public CommentProfile()
         {
-            CreateMap<Comment, CommentDTO>();
+            CreateMap<Comment, CommentDTO>(
+            ).ForMember(
+                dest => dest.CreatedBy,
+                opt => opt.MapFrom(src => src.AppUser.UserName)
+            );
             CreateMap<CreateCommentRequestDTO, Comment>();
         }
     }

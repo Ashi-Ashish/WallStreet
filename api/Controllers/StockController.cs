@@ -42,7 +42,7 @@ namespace api.Controllers
                 return BadRequest(ModelState);
             }
             var stocks = await _stockRepo.GetAllAsync(query);
-            var stockDtos = stocks.Select(s => _mapper.Map<StockDTO>(s));
+            var stockDtos = stocks.Select(s => _mapper.Map<StockDTO>(s)).ToList();
             return Ok(stockDtos);
         }
 

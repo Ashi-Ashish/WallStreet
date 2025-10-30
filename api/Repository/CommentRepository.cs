@@ -25,7 +25,7 @@ namespace api.Repository
 
         public async Task<Comment?> DeleteAsync(int id)
         {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            var comment = await _context.Comments.Include(c => c.AppUser).FirstOrDefaultAsync(c => c.Id == id);
             if (comment == null)
             {
                 return null;
@@ -37,12 +37,12 @@ namespace api.Repository
 
         public async Task<List<Comment>> GetAllAsync()
         {
-            return await _context.Comments.ToListAsync();
+            return await _context.Comments.Include(c => c.AppUser).ToListAsync();
         }
 
         public async Task<Comment?> GetByIdAsync(int id)
         {
-            return await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            return await _context.Comments.Include(c => c.AppUser).FirstOrDefaultAsync(c => c.Id == id);
         }
 
         public async Task<Comment?> UpdateAsync(
@@ -50,7 +50,7 @@ namespace api.Repository
             UpdateCommentRequestDTO commentDto
         )
         {
-            var comment = await _context.Comments.FirstOrDefaultAsync(c => c.Id == id);
+            var comment = await _context.Comments.Include(c => c.AppUser).FirstOrDefaultAsync(c => c.Id == id);
             if (comment == null)
             {
                 return null;

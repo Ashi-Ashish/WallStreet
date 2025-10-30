@@ -3,30 +3,39 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using api.DTOs.Comment;
+using api.Extensions;
 using api.Interfaces;
 using api.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/comment")]
     public class CommentController : ControllerBase
     {
         private readonly ICommentRepository _commentRepository;
-
+        private readonly UserManager<AppUser> _userManager;
         private readonly IStockRepository _stockRepository;
+        private readonly IFMPService _fMPService;
         private readonly IMapper _mapper;
         public CommentController(
             ICommentRepository commentRepository,
             IStockRepository stockRepository,
-            IMapper mapper
-            )
+            IMapper mapper,
+            UserManager<AppUser> userManager,
+            IFMPService fMPService
+        )
         {
             _commentRepository = commentRepository;
             _stockRepository = stockRepository;
             _mapper = mapper;
+            _userManager = userManager;
+            _fMPService = fMPService;
         }
 
         [HttpGet]
@@ -50,15 +59,36 @@ namespace api.Controllers
         }
 
         [HttpPost]
-        [Route("{stockId}")]
-        public async Task<IActionResult> Create([FromRoute] int stockId, [FromBody] CreateCommentRequestDTO commentDto)
+        [Route("{symbol:alpha}")]
+        public async Task<IActionResult> Create([FromRoute] string symbol, [FromBody] CreateCommentRequestDTO commentDto)
         {
-            if (!await _stockRepository.IsStockExistsAsync(stockId))
+
+            if (!ModelState.IsValid)
             {
-                return BadRequest("Stock does not exist");
+                return BadRequest(ModelState);
             }
+
+            var stock = await _stockRepository.GetBySymbolAsync(symbol);
+
+            if (stock == null)
+            {
+                stock = await _fMPService.FindStockBySymbolAsync(symbol);
+                if (stock == null)
+                {
+                    return BadRequest("Stock does not exists");
+                }
+                else
+                {
+                    await _stockRepository.CreateAsync(stock);
+                }
+            }
+
+
+            var userEmail = User.GetUserEmail();
+            var appUser = await _userManager.FindByEmailAsync(userEmail);
             var comment = _mapper.Map<Comment>(commentDto);
-            comment.StockId = stockId;
+            comment.StockId = stock.Id;
+            comment.AppUserId = appUser.Id;
             Console.WriteLine($"Comment.Stock: {comment.StockId}");
             await _commentRepository.CreateAsync(comment);
             return CreatedAtAction(nameof(GetById), new { id = comment.Id }, _mapper.Map<CommentDTO>(comment));
