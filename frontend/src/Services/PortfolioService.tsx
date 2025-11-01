@@ -8,7 +8,7 @@ const api = config.backendUrl;
 export const portfolioAddAPI = async (symbol: string) => {
 
     try {
-        const data = await axios.post<PortfolioPost>(`${api}?symbol=${symbol}`);
+        const data = await axios.post<PortfolioPost>(`${api}portfolio?symbol=${symbol}`);
         return data;
     } catch (error) {
         handleError(error);
