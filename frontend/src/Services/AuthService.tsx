@@ -1,8 +1,9 @@
 import axios from "axios";
 import { handleError } from "../Helpers/ErrorHandler";
 import type { UserProfileToken } from "../Models/User";
+import config from "../config";
 
-const api = import.meta.env.VITE_BACKEND_URL;
+const api = config.backendUrl;
 
 
 export const loginAPI = async (
