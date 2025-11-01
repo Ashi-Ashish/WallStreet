@@ -6,26 +6,29 @@ import { useAuth } from '../../Context/useAuth';
 
 type Props = {}
 
-type LoginFormInput = {
+type RegisterFormInput = {
+    email: string
     userName: string
     password: string;
 }
 
 const validation = Yup.object().shape({
+    email: Yup.string().email('Invalid email').required('Email is required'),
     userName: Yup.string().required('Username is required'),
     password: Yup.string().required('Password is required')
 });
 
-const LoginPage = (props: Props) => {
-    const { loginUser } = useAuth();
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormInput>(
+const RegisterPage = (props: Props) => {
+    const { registerUser } = useAuth();
+    const { register, handleSubmit, formState: { errors } } = useForm<RegisterFormInput>(
         {
             resolver: yupResolver(validation)
         }
     );
 
-    const handleLogin = (form: LoginFormInput) => {
-        loginUser(form.userName, form.password);
+    const handleRegister = (form: RegisterFormInput) => {
+        debugger;
+        registerUser(form.email, form.userName, form.password);
     }
 
     return (
@@ -46,19 +49,35 @@ const LoginPage = (props: Props) => {
                         className="mx-auto h-10 w-auto"
                     />
                     <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-                        Sign in to your account
+                        Sign up for an account
                     </h2>
                 </div>
 
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-                    <form className="space-y-6" onSubmit={handleSubmit(handleLogin)}>
+                    <form className="space-y-6" onSubmit={handleSubmit(handleRegister)}>
                         <div>
-                            <label htmlFor="UserName" className="block text-sm/6 font-medium text-gray-900">
+                            <label htmlFor="Email" className="block text-sm/6 font-medium text-gray-900">
+                                Email
+                            </label>
+                            <div className="mt-2">
+                                <input
+                                    id="email"
+                                    type="text"
+                                    required
+                                    className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"
+                                    {...register('email')}
+                                />
+                                {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>}
+                            </div>
+                        </div>
+
+                        <div>
+                            <label htmlFor="userName" className="block text-sm/6 font-medium text-gray-900">
                                 Username
                             </label>
                             <div className="mt-2">
                                 <input
-                                    id="UserName"
+                                    id="userName"
                                     type="text"
                                     required
                                     className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"
@@ -97,15 +116,17 @@ const LoginPage = (props: Props) => {
                                 type="submit"
                                 className="flex w-full justify-center rounded-md bg-gray-600 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-xs hover:bg-gray-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
                             >
-                                Sign in
+                                Sign up
                             </button>
                         </div>
-                        <p className="mt-6 text-center text-sm text-gray-600">
-                            Don't have an account?{' '}
-                            <a href="/register" className="font-semibold text-gray-600 hover:text-gray-500">
-                                Sign up
-                            </a>
-                        </p>
+                        <div className="text-center">
+                            <p className="mt-6 text-sm text-gray-600">
+                                Already have an account?{' '}
+                                <a href="/login" className="font-semibold text-gray-600 hover:text-gray-500">
+                                    Sign in
+                                </a>
+                            </p>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -113,4 +134,4 @@ const LoginPage = (props: Props) => {
     )
 }
 
-export default LoginPage
+export default RegisterPage
