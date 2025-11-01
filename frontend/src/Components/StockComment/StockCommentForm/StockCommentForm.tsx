@@ -29,51 +29,58 @@ const StockCommentForm = ({ stockSymbol, handleComment }: Props) => {
         formState: { errors },
     } = useForm<CommentFormInputs>({ resolver: yupResolver(validation) });
     return (
-        <div className="max-w-2xl mx-auto p-4 bg-white rounded-lg shadow-sm">
-            <h3 className="text-lg font-semibold mb-3">Comment on {stockSymbol}</h3>
+        <div className="w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm dark:border-gray-800 dark:bg-gray-900">
+            <div className="border-b border-gray-200 bg-gray-50/70 px-6 py-4 dark:border-gray-800 dark:bg-gray-900/40">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Add your comment</h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                    Join the conversation about {stockSymbol} and keep it constructive.
+                </p>
+            </div>
             <form
-                onSubmit={handleSubmit((handleComment))}
-                className="space-y-4"
+                onSubmit={handleSubmit(handleComment)}
+                className="space-y-5 px-6 py-5"
             >
-                <div>
-                    <label htmlFor="title" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                    <label htmlFor="title" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
                         Title
                     </label>
                     <input
                         id="title"
                         {...register("title")}
-                        placeholder="Brief summary"
-                        className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                        placeholder="Give your comment a clear headline"
+                        className="w-full rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-2.5 text-sm text-gray-700 placeholder:text-gray-400 transition focus:border-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-400/60 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500/40"
                     />
                     {errors.title?.message && (
-                        <p className="mt-1 text-sm text-red-600">{errors.title.message as string}</p>
+                        <p className="text-sm text-red-500">{errors.title.message as string}</p>
                     )}
                 </div>
 
-                <div>
-                    <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-1">
+                <div className="space-y-2">
+                    <label htmlFor="content" className="block text-sm font-semibold text-gray-700 dark:text-gray-200">
                         Content
                     </label>
                     <textarea
                         id="content"
                         {...register("content")}
                         rows={6}
-                        placeholder="Share your thoughts about this stock..."
-                        className="w-full px-3 py-2 border rounded-md resize-vertical focus:outline-none focus:ring-2 focus:ring-gray-500 focus:border-transparent"
+                        placeholder="Share your perspective, insights, or questions..."
+                        className="w-full min-h-[160px] rounded-xl border border-gray-200 bg-gray-50/80 px-4 py-3 text-sm text-gray-700 placeholder:text-gray-400 transition focus:border-gray-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-gray-400/60 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-100 dark:placeholder:text-gray-500 dark:focus:border-gray-500 dark:focus:ring-gray-500/40"
                     />
                     {errors.content?.message && (
-                        <p className="mt-1 text-sm text-red-600">{errors.content.message as string}</p>
+                        <p className="text-sm text-red-500">{errors.content.message as string}</p>
                     )}
                 </div>
 
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                    <span className="text-xs text-gray-400 dark:text-gray-500">
+                        Minimum 10 characters · Max 2000
+                    </span>
                     <button
                         type="submit"
-                        className="inline-flex items-center px-4 py-2 bg-gray-600 text-white text-sm font-medium rounded-md hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500"
+                        className="inline-flex items-center justify-center rounded-full bg-gray-900 px-5 py-2.5 text-sm font-semibold text-white shadow-sm transition duration-200 hover:bg-black focus:outline-none focus:ring-2 focus:ring-gray-500/60 focus:ring-offset-2 focus:ring-offset-white dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-white dark:focus:ring-gray-300 dark:focus:ring-offset-gray-900"
                     >
-                        Post Comment
+                        Post comment
                     </button>
-                    <span className="text-xs text-gray-500">Minimum 10 characters · Max 2000</span>
                 </div>
             </form>
         </div>
