@@ -6,8 +6,6 @@ import Sidebar from "../../Components/Sidebar/Sidebar";
 import CompanyDashboard from "../../Components/CompanyDashboard/CompanyDashboard";
 import Tile from "../../Components/Tile/Tile";
 import Spinner from "../../Components/Spinner/Spinner";
-import TenKFinder from "../../Components/TenKFinder/TenKFinder";
-import CompFinder from "../../Components/CompFinder/CompFinder";
 
 interface Props { }
 
